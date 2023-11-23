@@ -1,0 +1,111 @@
+TaskId,TaskGroupId,TaskTypeName,CarrierCode,AircraftTypeCode,ArrivalFlightId,DepartureFlightId,ArrivalServiceType,DepartureServiceType,ArrivalCategory,DepartureCategory,StartDate,StartTime,EndDate,EndTime,Duration-min,BufferTime-min
+1,1,"Single paired task",TK,A,1000,1001,J,J,Domestic,Domestic,25.03.2023,05:00:00,25.03.2023,08:00:00,180,30
+2,2,"Sadece Arrival",TK,B,2000,,J,,International,,25.03.2023,04:30:00,25.03.2023,06:30:00,120,30
+3,2,"Sadece Departure",TK,C,,2001,,J,,International,25.03.2023,07:30:00,25.03.2023,09:30:00,120,30
+4,3,"Sadece Arrival",TK,D,3000,,J,,Domestic,,25.03.2023,09:30:00,25.03.2023,10:15:00,45,30
+5,3,"Remote Tow",TK,D,3000,3001,J,J,Domestic,International,25.03.2023,10:20:00,25.03.2023,15:55:00,335,30
+6,3,"Sadece Departure",TK,D,,3001,,J,,International,25.03.2023,16:00:00,25.03.2023,17:00:00,60,30
+7,4,"Sadece Arrival",TK,E,4000,,J,,International,,25.03.2023,08:00:00,25.03.2023,10:00:00,120,30
+8,4,"Hangar Tow",TK,E,4000,4001,J,J,International,International,25.03.2023,10:01:00,25.03.2023,15:59:00,358,30
+9,4,"Sadece Departure",TK,E,,4001,,J,,International,25.03.2023,16:00:00,25.03.2023,18:00:00,120,30
+10,5,"Sadece Arrival",TK,F,5000,,J,,International,,25.03.2023,06:15:00,25.03.2023,08:15:00,120,30
+11,5,"Sadece Departure",TK,F,,5001,,J,,Domestic,25.03.2023,08:20:00,25.03.2023,10:30:00,130,30
+12,6,"Single paired task",TK,A,1050,1051,J,A,Domestic,Domestic,25.03.2023,07:00:00,25.03.2023,10:00:00,180,30
+13,7,"Sadece Arrival",TK,B,2050,,J,,International,,25.03.2023,06:30:00,25.03.2023,08:30:00,120,30
+14,7,"Sadece Departure",TK,C,,2051,,J,,International,25.03.2023,09:30:00,25.03.2023,11:30:00,120,30
+15,8,"Sadece Arrival",TK,D,3050,,J,,Domestic,,25.03.2023,11:30:00,25.03.2023,12:15:00,45,30
+16,8,"Remote Tow",TK,D,3050,3051,J,J,Domestic,International,25.03.2023,12:20:00,25.03.2023,17:55:00,335,30
+17,8,"Sadece Departure",TK,D,,3051,,J,,International,25.03.2023,18:00:00,25.03.2023,19:00:00,60,30
+18,9,"Sadece Arrival",TK,E,4050,,J,,International,,25.03.2023,10:00:00,25.03.2023,12:00:00,120,30
+19,9,"Hangar Tow",TK,E,4050,4051,J,J,International,International,25.03.2023,12:01:00,25.03.2023,17:59:00,358,30
+20,9,"Sadece Departure",TK,E,,4051,,J,,International,25.03.2023,18:00:00,25.03.2023,20:00:00,120,30
+21,10,"Sadece Arrival",TK,F,5050,,J,,International,,25.03.2023,08:15:00,25.03.2023,10:15:00,120,30
+22,10,"Sadece Departure",TK,F,,5051,,J,,Domestic,25.03.2023,10:20:00,25.03.2023,12:30:00,130,30
+23,11,"Single paired task",TK,A,1100,1101,J,J,Domestic,Domestic,25.03.2023,09:00:00,25.03.2023,12:00:00,180,30
+24,12,"Sadece Arrival",TK,B,2100,,J,,International,,25.03.2023,08:30:00,25.03.2023,10:30:00,120,30
+25,12,"Sadece Departure",TK,C,,2101,,J,,International,25.03.2023,11:30:00,25.03.2023,13:30:00,120,30
+26,13,"Sadece Arrival",TK,D,3100,,J,,Domestic,,25.03.2023,13:30:00,25.03.2023,14:15:00,45,30
+27,13,"Remote Tow",TK,D,3100,3101,J,J,Domestic,International,25.03.2023,14:20:00,25.03.2023,19:55:00,335,30
+28,13,"Sadece Departure",TK,D,,3101,,J,,International,25.03.2023,20:00:00,25.03.2023,21:00:00,60,30
+29,14,"Sadece Arrival",TK,E,4100,,J,,International,,25.03.2023,12:00:00,25.03.2023,14:00:00,120,30
+30,14,"Hangar Tow",TK,E,4100,4101,J,J,International,International,25.03.2023,14:01:00,25.03.2023,19:59:00,358,30
+31,14,"Sadece Departure",TK,E,,4101,,J,,International,25.03.2023,20:00:00,25.03.2023,22:00:00,120,30
+32,15,"Sadece Arrival",TK,F,5100,,J,,International,,25.03.2023,10:15:00,25.03.2023,12:15:00,120,30
+33,15,"Sadece Departure",TK,F,,5101,,J,,Domestic,25.03.2023,12:20:00,25.03.2023,14:30:00,130,30
+34,16,"Single paired task",TK,A,1150,1151,J,J,Domestic,Domestic,25.03.2023,09:00:00,25.03.2023,12:00:00,180,30
+35,17,"Sadece Arrival",TK,B,2150,,J,,International,,25.03.2023,08:30:00,25.03.2023,10:30:00,120,30
+36,17,"Sadece Departure",TK,C,,2151,,J,,International,25.03.2023,11:30:00,25.03.2023,13:30:00,120,30
+37,18,"Sadece Arrival",TK,D,3150,,J,,Domestic,,25.03.2023,13:30:00,25.03.2023,14:15:00,45,30
+38,18,"Remote Tow",TK,D,3150,3151,J,J,Domestic,International,25.03.2023,14:20:00,25.03.2023,19:55:00,335,30
+39,18,"Sadece Departure",TK,D,,3151,,J,,International,25.03.2023,20:00:00,25.03.2023,21:00:00,60,30
+40,19,"Sadece Arrival",TK,E,4150,,J,,International,,25.03.2023,12:00:00,25.03.2023,14:00:00,120,30
+41,19,"Hangar Tow",TK,E,4150,4151,J,J,International,International,25.03.2023,14:01:00,25.03.2023,19:59:00,358,30
+42,19,"Sadece Departure",TK,E,,4151,,J,,International,25.03.2023,20:00:00,25.03.2023,22:00:00,120,30
+43,20,"Sadece Arrival",TK,F,5150,,J,,International,,25.03.2023,10:15:00,25.03.2023,12:15:00,120,30
+44,20,"Sadece Departure",TK,F,,5151,,J,,Domestic,25.03.2023,12:20:00,25.03.2023,14:30:00,130,30
+45,21,"Single paired task",TK,A,1200,1201,J,J,Domestic,Domestic,25.03.2023,13:00:00,25.03.2023,16:00:00,180,30
+46,22,"Sadece Arrival",TK,B,2200,,J,,International,,25.03.2023,12:30:00,25.03.2023,14:30:00,120,30
+47,22,"Sadece Departure",TK,C,,2201,,J,,International,25.03.2023,15:30:00,25.03.2023,17:30:00,120,30
+48,23,"Sadece Arrival",TK,D,3200,,J,,Domestic,,25.03.2023,17:30:00,25.03.2023,18:15:00,45,30
+49,23,"Remote Tow",TK,D,3200,3201,J,J,Domestic,International,25.03.2023,18:20:00,25.03.2023,23:55:00,335,30
+50,23,"Sadece Departure",TK,D,,3201,,J,,International,26.03.2023,00:00:00,26.03.2023,01:00:00,60,30
+51,24,"Sadece Arrival",TK,E,4200,,J,,International,,25.03.2023,16:00:00,25.03.2023,18:00:00,120,30
+52,24,"Hangar Tow",TK,E,4200,4201,J,J,International,International,25.03.2023,18:01:00,25.03.2023,23:59:00,358,30
+53,24,"Sadece Departure",TK,E,,4201,,J,,International,26.03.2023,00:00:00,26.03.2023,02:00:00,120,30
+54,25,"Sadece Arrival",TK,F,5200,,J,,International,,25.03.2023,14:15:00,25.03.2023,16:15:00,120,30
+55,25,"Sadece Departure",TK,F,,5201,,J,,Domestic,25.03.2023,16:20:00,25.03.2023,18:30:00,130,30
+56,1,"Single paired task",TK,A,1000,1001,J,J,Domestic,Domestic,26.03.2023,05:00:00,26.03.2023,08:00:00,180,30
+57,2,"Sadece Arrival",TK,B,2000,,J,,International,,26.03.2023,04:30:00,26.03.2023,06:30:00,120,30
+58,2,"Sadece Departure",TK,C,,2001,,J,,International,26.03.2023,07:30:00,26.03.2023,09:30:00,120,30
+59,3,"Sadece Arrival",TK,D,3000,,J,,Domestic,,26.03.2023,09:30:00,26.03.2023,10:15:00,45,30
+60,3,"Remote Tow",TK,D,3000,3001,J,J,Domestic,International,26.03.2023,10:20:00,26.03.2023,15:55:00,335,30
+61,3,"Sadece Departure",TK,D,,3001,,J,,International,26.03.2023,16:00:00,26.03.2023,17:00:00,60,30
+62,4,"Sadece Arrival",TK,E,4000,,J,,International,,26.03.2023,08:00:00,26.03.2023,10:00:00,120,30
+63,4,"Hangar Tow",TK,E,4000,4001,J,J,International,International,26.03.2023,10:01:00,26.03.2023,15:59:00,358,30
+64,4,"Sadece Departure",TK,E,,4001,,J,,International,26.03.2023,16:00:00,26.03.2023,18:00:00,120,30
+65,5,"Sadece Arrival",TK,F,5000,,J,,International,,26.03.2023,06:15:00,26.03.2023,08:15:00,120,30
+66,5,"Sadece Departure",TK,F,,5001,,J,,Domestic,26.03.2023,08:20:00,26.03.2023,10:30:00,130,30
+67,6,"Single paired task",TK,A,1050,1051,J,A,Domestic,Domestic,26.03.2023,07:00:00,26.03.2023,10:00:00,180,30
+68,7,"Sadece Arrival",TK,B,2050,,J,,International,,26.03.2023,06:30:00,26.03.2023,08:30:00,120,30
+69,7,"Sadece Departure",TK,C,,2051,,J,,International,26.03.2023,09:30:00,26.03.2023,11:30:00,120,30
+70,8,"Sadece Arrival",TK,D,3050,,J,,Domestic,,26.03.2023,11:30:00,26.03.2023,12:15:00,45,30
+71,8,"Remote Tow",TK,D,3050,3051,J,J,Domestic,International,26.03.2023,12:20:00,26.03.2023,17:55:00,335,30
+72,8,"Sadece Departure",TK,D,,3051,,J,,International,26.03.2023,18:00:00,26.03.2023,19:00:00,60,30
+73,9,"Sadece Arrival",TK,E,4050,,J,,International,,26.03.2023,10:00:00,26.03.2023,12:00:00,120,30
+74,9,"Hangar Tow",TK,E,4050,4051,J,J,International,International,26.03.2023,12:01:00,26.03.2023,17:59:00,358,30
+75,9,"Sadece Departure",TK,E,,4051,,J,,International,26.03.2023,18:00:00,26.03.2023,20:00:00,120,30
+76,10,"Sadece Arrival",TK,F,5050,,J,,International,,26.03.2023,08:15:00,26.03.2023,10:15:00,120,30
+77,10,"Sadece Departure",TK,F,,5051,,J,,Domestic,26.03.2023,10:20:00,26.03.2023,12:30:00,130,30
+78,11,"Single paired task",TK,A,1100,1101,J,J,Domestic,Domestic,26.03.2023,09:00:00,26.03.2023,12:00:00,180,30
+79,12,"Sadece Arrival",TK,B,2100,,J,,International,,26.03.2023,08:30:00,26.03.2023,10:30:00,120,30
+80,12,"Sadece Departure",TK,C,,2101,,J,,International,26.03.2023,11:30:00,26.03.2023,13:30:00,120,30
+81,13,"Sadece Arrival",TK,D,3100,,J,,Domestic,,26.03.2023,13:30:00,26.03.2023,14:15:00,45,30
+82,13,"Remote Tow",TK,D,3100,3101,J,J,Domestic,International,26.03.2023,14:20:00,26.03.2023,19:55:00,335,30
+83,13,"Sadece Departure",TK,D,,3101,,J,,International,26.03.2023,20:00:00,26.03.2023,21:00:00,60,30
+84,14,"Sadece Arrival",TK,E,4100,,J,,International,,26.03.2023,12:00:00,26.03.2023,14:00:00,120,30
+85,14,"Hangar Tow",TK,E,4100,4101,J,J,International,International,26.03.2023,14:01:00,26.03.2023,19:59:00,358,30
+86,14,"Sadece Departure",TK,E,,4101,,J,,International,26.03.2023,20:00:00,26.03.2023,22:00:00,120,30
+87,15,"Sadece Arrival",TK,F,5100,,J,,International,,26.03.2023,10:15:00,26.03.2023,12:15:00,120,30
+88,15,"Sadece Departure",TK,F,,5101,,J,,Domestic,26.03.2023,12:20:00,26.03.2023,14:30:00,130,30
+89,16,"Single paired task",TK,A,1150,1151,J,J,Domestic,Domestic,26.03.2023,09:00:00,26.03.2023,12:00:00,180,30
+90,17,"Sadece Arrival",TK,B,2150,,J,,International,,26.03.2023,08:30:00,26.03.2023,10:30:00,120,30
+91,17,"Sadece Departure",TK,C,,2151,,J,,International,26.03.2023,11:30:00,26.03.2023,13:30:00,120,30
+92,18,"Sadece Arrival",TK,D,3150,,J,,Domestic,,26.03.2023,13:30:00,26.03.2023,14:15:00,45,30
+93,18,"Remote Tow",TK,D,3150,3151,J,J,Domestic,International,26.03.2023,14:20:00,26.03.2023,19:55:00,335,30
+94,18,"Sadece Departure",TK,D,,3151,,J,,International,26.03.2023,20:00:00,26.03.2023,21:00:00,60,30
+95,19,"Sadece Arrival",TK,E,4150,,J,,International,,26.03.2023,12:00:00,26.03.2023,14:00:00,120,30
+96,19,"Hangar Tow",TK,E,4150,4151,J,J,International,International,26.03.2023,14:01:00,26.03.2023,19:59:00,358,30
+97,19,"Sadece Departure",TK,E,,4151,,J,,International,26.03.2023,20:00:00,26.03.2023,22:00:00,120,30
+98,20,"Sadece Arrival",TK,F,5150,,J,,International,,26.03.2023,10:15:00,26.03.2023,12:15:00,120,30
+99,20,"Sadece Departure",TK,F,,5151,,J,,Domestic,26.03.2023,12:20:00,26.03.2023,14:30:00,130,30
+100,21,"Single paired task",TK,A,1200,1201,J,J,Domestic,Domestic,26.03.2023,13:00:00,26.03.2023,16:00:00,180,30
+101,22,"Sadece Arrival",TK,B,2200,,J,,International,,26.03.2023,12:30:00,26.03.2023,14:30:00,120,30
+102,22,"Sadece Departure",TK,C,,2201,,J,,International,26.03.2023,15:30:00,26.03.2023,17:30:00,120,30
+103,23,"Sadece Arrival",TK,D,3200,,J,,Domestic,,26.03.2023,17:30:00,26.03.2023,18:15:00,45,30
+104,23,"Remote Tow",TK,D,3200,3201,J,J,Domestic,International,26.03.2023,18:20:00,26.03.2023,23:55:00,335,30
+105,23,"Sadece Departure",TK,D,,3201,,J,,International,27.03.2023,00:00:00,27.03.2023,01:00:00,60,30
+106,24,"Sadece Arrival",TK,E,4200,,J,,International,,26.03.2023,16:00:00,26.03.2023,18:00:00,120,30
+107,24,"Hangar Tow",TK,E,4200,4201,J,J,International,International,26.03.2023,18:01:00,26.03.2023,23:59:00,358,30
+108,24,"Sadece Departure",TK,E,,4201,,J,,International,27.03.2023,00:00:00,27.03.2023,02:00:00,120,30
+109,25,"Sadece Arrival",TK,F,5200,,J,,International,,26.03.2023,14:15:00,26.03.2023,16:15:00,120,30
+110,25,"Sadece Departure",TK,F,,5201,,J,,Domestic,26.03.2023,16:20:00,26.03.2023,18:30:00,130,30

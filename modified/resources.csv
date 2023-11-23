@@ -1,0 +1,13 @@
+ResourceId,ResourceType,Carrier,A,B,C,D,E,F,Single paired task,Sadece Arrival,Sadece Departure,Remote Tow,Hangar Tow,Normal Service,Cargo/Mail,International,Domestic
+1,Bridge,TK,1,1,1,0,0,0,1,1,1,0,0,1,0,1,0
+2,Bridge,TK,0,1,1,1,1,1,1,1,1,0,0,1,0,1,0
+3,Bridge,TK,0,1,1,1,0,0,1,1,1,0,0,1,0,0,1
+4,Bridge,TK,1,1,1,1,0,0,1,1,1,0,0,1,0,1,1
+5,Remote,TK,0,0,1,0,0,0,1,1,1,1,0,1,0,1,1
+6,Remote,TK,1,1,0,0,0,0,1,0,0,1,0,1,0,1,1
+7,Remote,TK,1,1,1,1,1,1,1,0,0,1,0,1,0,1,1
+8,Remote,TK,1,1,1,0,0,0,1,0,0,1,0,1,0,1,1
+9,Remote,TK,1,1,1,0,0,0,1,0,0,1,0,1,0,1,1
+10,Remote,TK,1,1,1,0,0,0,1,0,0,1,0,1,1,1,1
+11,Remote,TK,0,0,1,1,1,0,1,0,0,1,0,1,1,1,1
+12,Hangar,TK,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1
