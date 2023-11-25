@@ -1,4 +1,4 @@
-ResourceId,ResourceType,Carrier,A,B,C,D,E,F,Single paired task,Sadece Arrival,Sadece Departure,Remote Tow,Hangar Tow,Normal Service,Cargo/Mail,International,Domestic
+ResourceId,ResourceType,Carrier,A,B,C,D,E,F,Single paired task,Sadece Arrival,Sadece Departure,Remote Tow,Hangar Tow,Normal_Service,Cargo/Mail,International,Domestic
 1,Bridge,TK,1,1,1,0,0,0,1,1,1,0,0,1,0,1,0
 2,Bridge,TK,0,1,1,1,1,1,1,1,1,0,0,1,0,1,0
 3,Bridge,TK,0,1,1,1,0,0,1,1,1,0,0,1,0,0,1
