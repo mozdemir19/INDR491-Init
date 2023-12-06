@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from pulp import *
+import pulp as pl
 from functools import reduce
 import pickle
 
@@ -61,7 +61,7 @@ tasksHeatmap = tasksHeatmap.drop_duplicates()
 task_list = tasks.TaskId.values
 resource_list = resources.ResourceId.values
 
-problem = LpProblem('Adnan_Menderes', LpMaximize)
+problem = pl.LpProblem('Adnan_Menderes', pl.LpMaximize)
 
 x = {}
 U = {}
@@ -70,18 +70,18 @@ np.random.seed(1234)
 ### DEFINE VARIABLES, only for compatible task-resource pairs
 for t in task_list:
     for r in compatabilities[t]:
-        x[t, r] = LpVariable("t%i_r%s" % (t, r), lowBound=0, upBound=1, cat=LpBinary)
+        x[t, r] = pl.LpVariable("t%i_r%s" % (t, r), lowBound=0, upBound=1, cat=pl.LpBinary)
         U[t, r] = np.random.randint(1, 10)
         
 ### DEFINE OBJECTIVE FUNCTION, over existing variables
-problem += lpSum([U[var] * x[var] for var in x])
+problem += pl.lpSum([U[var] * x[var] for var in x])
 
 ### DEFINE CONSTRAINTS
 # i) each task is assigned to maximum of one resource
 for t in task_list:
     if len(compatabilities[t]) > 0:
-        problem += lpSum([x[t, r] for r in compatabilities[t]]) <= 1
-        print(lpSum([x[t, r] for r in compatabilities[t]]))
+        problem += pl.lpSum([x[t, r] for r in compatabilities[t]]) <= 1
+        print(pl.lpSum([x[t, r] for r in compatabilities[t]]))
     
 
 # ii) assign only one task to a resource per time-step
@@ -96,11 +96,12 @@ for idx, row in tasksHeatmap.iterrows():
         
         # Only need to impose constraint if there is an overlap
         if len(cons) > 1:
-            print(lpSum(cons))
+            print(pl.lpSum(cons))
             #print(lpSum(cons))
-            constraint_for_time_bucket = lpSum(cons) <= 1
+            constraint_for_time_bucket = pl.lpSum(cons) <= 1
             # These will occur when the plane overlaps change
             problem += constraint_for_time_bucket
+
 
 problem.solve()
 
@@ -120,6 +121,7 @@ for var in x:
 
 
 print(assignments)
+assignments.to_csv('assignments.csv', index=False)
 print(total)
 lencompat = 0
 for var in compatabilities:
@@ -127,6 +129,22 @@ for var in compatabilities:
         lencompat += 1
 
 print(lencompat)
+
+print(assignments.loc[assignments['ResourceId'] == 6])
+gantt_df = pd.DataFrame({'ResourceId': assignments.ResourceId.values, 'TaskId': assignments.TaskId.values, 
+                         'Duration': (tasks.loc[assignments.TaskId.values - 1].End_DateTime - tasks.loc[assignments.TaskId.values - 1].Start_DateTime).values,
+                         'StartDateTime': tasks.loc[assignments.TaskId.values - 1].Start_DateTime.values})
+
+#gantt_df.loc['ResourceId'] = assignments.ResourceId.values,
+#gantt_df.loc['TaskId'] = assignments.TaskId.values
+
+plt.barh(y=gantt_df['ResourceId'].values.astype(int), width=gantt_df['Duration'], left=gantt_df['StartDateTime'])
+#for i, task in enumerate(gantt_df.TaskId.values):
+
+#    plt.text(x=(gantt_df.loc[gantt_df['TaskId'] == task].StartDateTime.values[0] + gantt_df.loc[gantt_df['TaskId'] == task].Duration.values[0] / 2), y=int(gantt_df.loc[gantt_df['TaskId'] == task].ResourceId.values[0]), s=task)
+plt.show()
+
+
 
 
 #print(compatabilities)
