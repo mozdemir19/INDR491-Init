@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 import pulp as pl
 from functools import reduce
 import pickle
+import json
+import plotly.express as px
+import plotly.graph_objects as go
+
 
 min_bucket=1
 
@@ -81,7 +85,7 @@ for t in task_list:
 print(priorityGroupThree.shape[0] - pl.lpSum([x[(t, r)] for t in priorityGroupThreeTaskList for r in compatabilities[t]]))
 
 ### DEFINE OBJECTIVE FUNCTION, over existing variables
-problem += pl.lpSum([U[var] * x[var] for var in x]) - (priorityGroupThree.shape[0] - pl.lpSum([x[(t, r)] for t in priorityGroupThreeTaskList for r in compatabilities[t]]))
+problem += pl.lpSum([U[var] * x[var] for var in x])# - (priorityGroupThree.shape[0] - pl.lpSum([x[(t, r)] for t in priorityGroupThreeTaskList for r in compatabilities[t]]))
 
 ### DEFINE CONSTRAINTS
 # i) each task is assigned to maximum of one resource
@@ -137,17 +141,41 @@ for var in compatabilities:
 
 
 gantt_df = pd.DataFrame({'ResourceId': assignments.ResourceId.values, 'TaskId': assignments.TaskId.values, 
-                         'Duration': (tasks.loc[assignments.TaskId.values - 1].End_DateTime - tasks.loc[assignments.TaskId.values - 1].Start_DateTime).values,
-                         'StartDateTime': tasks.loc[assignments.TaskId.values - 1].Start_DateTime.values})
+                         #'Duration': (tasks.loc[assignments.TaskId.values - 1].End_DateTime - tasks.loc[assignments.TaskId.values - 1].Start_DateTime).values,
+                         'StartDateTime': tasks.loc[assignments.TaskId.values - 1].Start_DateTime.values,
+                         'EndDateTime': tasks.loc[assignments.TaskId.values - 1].End_DateTime.values})
 
-#gantt_df.loc['ResourceId'] = assignments.ResourceId.values,
+
+fig = px.timeline(gantt_df, x_start='StartDateTime', x_end='EndDateTime', y='TaskId', color='ResourceId')
+fig.show()
+
+#gantt_df.loc['ResourceId'] = assignments.ResourceId.values
 #gantt_df.loc['TaskId'] = assignments.TaskId.values
 
-plt.barh(y=gantt_df['ResourceId'].values.astype(int), width=gantt_df['Duration'], left=gantt_df['StartDateTime'])
+#plt.barh(y=gantt_df['ResourceId'].values.astype(int), width=gantt_df['Duration'], left=gantt_df['StartDateTime'])
 #for i, task in enumerate(gantt_df.TaskId.values):
 
 #    plt.text(x=(gantt_df.loc[gantt_df['TaskId'] == task].StartDateTime.values[0] + gantt_df.loc[gantt_df['TaskId'] == task].Duration.values[0] / 2), y=int(gantt_df.loc[gantt_df['TaskId'] == task].ResourceId.values[0]), s=task)
-plt.show()
+#plt.show()
+
+ornek_task = tasks[['TaskId', 'TaskGroupId', 'TaskTypeName', 'AircraftTypeCode', 'ArrivalCategory', 'ArrivalServiceType', 'DepartureCategory', 'DepartureServiceType']].head()
+
+
+ornek_res = resources.head()
+
+#with open('ornek_compatability.json', 'w') as f:
+#    json.dump(compatabilities, f)
+#print(tasksHeatmap.head())
+ornek_heatmap = tasksHeatmap.head()[[i for i in range(1, 10)]].reset_index().rename(columns={'index': 'Time'})
+print(ornek_heatmap)
+task_fig = go.Figure(data=[go.Table(
+    header=dict(values=list(assignments.columns)),
+    cells=dict(values=[assignments[col] for col in assignments.columns])
+)])
+task_fig.show()
+
+for var in x:
+    print(type(var), type(x[var]), type(x[var].varValue))
 
 
 
