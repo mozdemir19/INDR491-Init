@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
 import pulp as pl
 from functools import reduce
@@ -17,7 +16,7 @@ resources = pd.read_csv('resources.csv')
 serviceTypeDict = {'J': 'Normal_Service',
                    'A': 'Cargo/Mail'}
 
-print(tasks)
+#print(tasks)
 
 tasks['Start_DateTime'] = pd.to_datetime(tasks.StartDate + " " + tasks.StartTime)
 
@@ -65,6 +64,12 @@ tasksHeatmap = tasksHeatmap.drop_duplicates()
 task_list = tasks.TaskId.values
 resource_list = resources.ResourceId.values
 
+priorityGroupOne = tasks
+priorityGroupTwoOneList = priorityGroupOne.TaskId.values
+print(priorityGroupOne)
+priorityGroupTwo = tasks[tasks.TaskTypeName.isin(['Single Paired Task', 'Sadece Arrival', 'Sadece Departure'])]
+priorityGroupTwoTaskList = priorityGroupTwo.TaskId.values
+print(priorityGroupTwo)
 priorityGroupThree = tasks[tasks['AircraftTypeCode'] == 'F']
 priorityGroupThreeTaskList = priorityGroupThree.TaskId.values
 print(priorityGroupThree)
@@ -78,14 +83,21 @@ np.random.seed(1234)
 ### DEFINE VARIABLES, only for compatible task-resource pairs
 for t in task_list:
     for r in compatabilities[t]:
-        x[t, r] = pl.LpVariable("t%i_r%s" % (t, r), lowBound=0, upBound=1, cat=pl.LpBinary)
+        x[t, r] = pl.LpVariable("x_%i,%s" % (t, r), lowBound=0, upBound=1, cat=pl.LpBinary)
         U[t, r] = 1 #np.random.randint(1, 10)
+
+# this variable is used to introduce constants to the objective function
+constOne = pl.LpVariable('constantOne', lowBound=1, upBound=1)
 
 
 print(priorityGroupThree.shape[0] - pl.lpSum([x[(t, r)] for t in priorityGroupThreeTaskList for r in compatabilities[t]]))
 
 ### DEFINE OBJECTIVE FUNCTION, over existing variables
-problem += pl.lpSum([U[var] * x[var] for var in x])# - (priorityGroupThree.shape[0] - pl.lpSum([x[(t, r)] for t in priorityGroupThreeTaskList for r in compatabilities[t]]))
+problem += pl.lpSum([pl.lpSum([U[var] * x[var] for var in x]), 
+            -0.5 * (priorityGroupThree.shape[0] * constOne - pl.lpSum([x[(t, r)] for t in priorityGroupThreeTaskList for r in compatabilities[t]])), 
+            -0.5 * (priorityGroupTwo.shape[0] * constOne - pl.lpSum([x[(t, r)] for t in priorityGroupTwoTaskList for r in compatabilities[t]])),
+            #-0.5 * (priorityGroupOne.shape[0] * constOne)
+            ])
 
 ### DEFINE CONSTRAINTS
 # i) each task is assigned to maximum of one resource
@@ -115,7 +127,7 @@ for idx, row in tasksHeatmap.iterrows():
 
 # iii) assign 
 
-problem.solve()
+problem.solve(pl.PULP_CBC_CMD(msg=1))
 
 total = 0
 assignments = pd.DataFrame(columns=['TaskId', 'ResourceId'])
@@ -131,8 +143,8 @@ for var in x:
     
 
 print(priorityGroupThree.shape[0] - pl.lpSum([x[(t, r)].varValue for t in priorityGroupThreeTaskList for r in compatabilities[t]]))
-
-print(assignments)
+print(priorityGroupTwo.shape[0] - pl.lpSum([x[(t, r)].varValue for t in priorityGroupTwoTaskList for r in compatabilities[t]]))
+#print(assignments)
 assignments.to_csv('assignments.csv', index=False)
 lencompat = 0
 for var in compatabilities:
@@ -145,41 +157,6 @@ gantt_df = pd.DataFrame({'ResourceId': assignments.ResourceId.values, 'TaskId': 
                          'StartDateTime': tasks.loc[assignments.TaskId.values - 1].Start_DateTime.values,
                          'EndDateTime': tasks.loc[assignments.TaskId.values - 1].End_DateTime.values})
 
-
-fig = px.timeline(gantt_df, x_start='StartDateTime', x_end='EndDateTime', y='TaskId', color='ResourceId')
+print(problem.objective)
+fig = px.timeline(gantt_df, x_start='StartDateTime', x_end='EndDateTime', y='ResourceId', color='TaskId')
 fig.show()
-
-#gantt_df.loc['ResourceId'] = assignments.ResourceId.values
-#gantt_df.loc['TaskId'] = assignments.TaskId.values
-
-#plt.barh(y=gantt_df['ResourceId'].values.astype(int), width=gantt_df['Duration'], left=gantt_df['StartDateTime'])
-#for i, task in enumerate(gantt_df.TaskId.values):
-
-#    plt.text(x=(gantt_df.loc[gantt_df['TaskId'] == task].StartDateTime.values[0] + gantt_df.loc[gantt_df['TaskId'] == task].Duration.values[0] / 2), y=int(gantt_df.loc[gantt_df['TaskId'] == task].ResourceId.values[0]), s=task)
-#plt.show()
-
-ornek_task = tasks[['TaskId', 'TaskGroupId', 'TaskTypeName', 'AircraftTypeCode', 'ArrivalCategory', 'ArrivalServiceType', 'DepartureCategory', 'DepartureServiceType']].head()
-
-
-ornek_res = resources.head()
-
-#with open('ornek_compatability.json', 'w') as f:
-#    json.dump(compatabilities, f)
-#print(tasksHeatmap.head())
-ornek_heatmap = tasksHeatmap.head()[[i for i in range(1, 10)]].reset_index().rename(columns={'index': 'Time'})
-print(ornek_heatmap)
-task_fig = go.Figure(data=[go.Table(
-    header=dict(values=list(assignments.columns)),
-    cells=dict(values=[assignments[col] for col in assignments.columns])
-)])
-task_fig.show()
-
-for var in x:
-    print(type(var), type(x[var]), type(x[var].varValue))
-
-
-
-
-#print(compatabilities)
-
-#print(tasks)
