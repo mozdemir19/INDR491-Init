@@ -41,7 +41,6 @@ for index, row in tasks.iterrows():
     if not pd.isna(row.DepartureServiceType):
         departureService = resources[(resources[serviceTypeDict[row.DepartureServiceType]] == 1)].ResourceId.values
     
-    #resourceArrays = [aircraftAndTaskType, arrivalCat, departureCat, arrivalService, departureService]
     compatabilities[row.TaskId] = reduce(np.intersect1d, (aircraftAndTaskType, arrivalCat, departureCat, arrivalService, departureService)).tolist()
 
 print(compatabilities)
