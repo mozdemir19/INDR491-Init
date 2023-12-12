@@ -58,6 +58,7 @@ tasksHeatmap[tasksHeatmap == True] = 1
 tasksHeatmap = tasksHeatmap.fillna(0).astype(int)
 tasksHeatmap.columns = tasks.TaskId.values
 tasksHeatmap = tasksHeatmap.drop_duplicates()
+print(tasksHeatmap)
 
 
 task_list = tasks.TaskId.values
