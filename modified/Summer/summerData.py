@@ -3,13 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pulp as pl
 from functools import reduce
-import pickle
 import json
 import plotly.express as px
 import plotly.graph_objects as go
 
 data = pd.ExcelFile('RMS-MultiKPI-Input-YazDonemi-GercekVeri.xlsx')
-tasks = pd.read_excel(data, sheet_name='Tasks').head(245)
+tasks = pd.read_excel(data, sheet_name='Tasks')
 
 tasks['StartDateTime'] = pd.to_datetime(tasks['StartDate'].astype(str) + ' ' + tasks['StartTime'].astype(str)) #pd.to_datetime(pd.to_datetime(tasks['StartDate']) + pd.to_datetime(tasks['StartTime']), format="%m-%d-%Y%H:%M:%S")
 tasks['EndDateTime'] = pd.to_datetime(tasks['EndDate'].astype(str) + ' ' + tasks['EndTime'].astype(str))
@@ -23,6 +22,7 @@ for ind, row in serviceTypes.iterrows():
 
 compatabilities = {}
 for index, row in tasks.iterrows():
+    print(index)
     compatabilities[row['TaskId']] = {}
     aircraftAndTaskType = resources[(resources[row['AircraftTypeCode'] + 'P'] == 1) & (resources[row['TaskTypeName']] == 1)].ResourceId.values.astype(str)
     if not pd.isna(row['ArrivalCategory']):
@@ -36,6 +36,8 @@ for index, row in tasks.iterrows():
     
     compatabilities[row['TaskId']] = reduce(np.intersect1d, (aircraftAndTaskType, arrivalCat, departureCat, arrivalServiceType, departureServiceType)).tolist()
 
+with open('summer_compat', 'w') as f:
+    json.dump(compatabilities, f, indent=4)
 time_series = pd.Series(True,
                         index= pd.date_range(start=tasks.StartDateTime.min()
                                              ,end=tasks.EndDateTime.max()
@@ -44,7 +46,7 @@ time_series = pd.Series(True,
 def trunc_ts(series):
     return time_series.truncate(series['StartDateTime'], series['EndDateTime'])
 
-"""taskHeatmap = tasks.apply(trunc_ts, axis=1).T
+taskHeatmap = tasks.apply(trunc_ts, axis=1).T
 taskHeatmap[taskHeatmap == True] = 1
 taskHeatmap = taskHeatmap.fillna(0).astype(int)
 taskHeatmap.columns = tasks.TaskId.values
@@ -53,7 +55,7 @@ taskHeatmap.to_csv('heatmap.csv')
 """
 taskHeatmap = pd.read_csv('heatmap.csv', index_col=0)
 print(taskHeatmap)
-
+"""
 taskList = tasks.TaskId.values
 resourceList = resources.ResourceId.values
 
@@ -73,20 +75,11 @@ for t in taskList:
     problem += pl.lpSum([x[t, r] for r in compatabilities[t]]) <= 1
 
 for idx, row in taskHeatmap.iterrows():
-    # Get all the tasks in time-step
     tasks_in_time_step = set(dict(row[row==1]).keys())
-    #print(tasks_in_time_step)
-    # For all gates
     for r in resourceList:
-        # Constraints may be blank
         cons = [x[t, r] for t in tasks_in_time_step if (t, r) in x]
-        
-        # Only need to impose constraint if there is an overlap
         if len(cons) > 1:
-            #print(pl.lpSum(cons))
-            #print(lpSum(cons))
             constraint_for_time_bucket = pl.lpSum(cons) <= 1
-            # These will occur when the plane overlaps change
             problem += constraint_for_time_bucket
 
 problem.solve()
