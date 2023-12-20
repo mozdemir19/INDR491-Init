@@ -2,27 +2,24 @@ import pandas as pd
 import numpy as np
 from functools import reduce
 
-data = pd.ExcelFile('RMS-MultiKPI-Input-YazDonemi-GercekVeri.xlsx')
-
 def newDF(tasks, resources, defaultValue=0):
     return pd.DataFrame(defaultValue, index=tasks.TaskId, columns=resources.ResourceId)
 
 def read_prios(tasks, resources, priorityContent, scores):
 
-    priorities = [pd.DataFrame( index=tasks.TaskId, columns = resources.ResourceId) for _ in range(priorityContent['PriorityId'].max())]
+    priorities = [newDF(tasks, resources) for _ in range(priorityContent['PriorityId'].max())]
 
     for i in range(len(priorities)):
         df = priorities[i]
-        df[resources.ResourceId.values] = 0
         df.loc[priorityContent[(priorityContent['PriorityId'] == i + 1) & (priorityContent['ObjectType'] == 'Task')]['ObjectId'].values,
             priorityContent[(priorityContent['PriorityId'] == i + 1) & (priorityContent['ObjectType'] == 'Resource')]['ObjectId'].values] = scores[i]
         
         priorities[i] = df
-
+        
     return priorities
 
 def compute_compatabilities(tasks, resources):
-    compatibilities = pd.DataFrame(0, index=tasks.TaskId, columns=resources.ResourceId)
+    compatibilities = newDF(tasks, resources)
 
     for index, row in tasks.iterrows():
         aircraftAndTaskType = resources[(resources[row['AircraftTypeCode'] + 'P'] == 1) & (resources[row['TaskTypeName']] == 1)].ResourceId

@@ -8,12 +8,17 @@ import pulp as pl
 import plotly.express as px
 import plotly.graph_objects as go
 import utils as util
+import os.path
 
 priorityScores = [500, 400, 300, 200]
 min_bucket = 1
+winter = '/../Winter/RMS-MultiKPI-Input-KisDonemi-GercekVeri.xlsx'
+summer = '/RMS-MultiKPI-Input-YazDonemi-GercekVeri.xlsx'
+dataFilePath = os.path.dirname(__file__) + summer
 
-data = pd.ExcelFile('RMS-MultiKPI-Input-YazDonemi-GercekVeri.xlsx')
+data = pd.ExcelFile(dataFilePath)
 tasks = pd.read_excel(data, sheet_name='Tasks')
+
 resources = pd.read_excel(data, sheet_name='Resources')
 priorityContent = pd.read_excel(data, sheet_name='PriorityContents')
 
@@ -75,8 +80,8 @@ assignments.to_csv('assignments.csv')
 ##print gantt chart
 gantt_df = pd.DataFrame({'ResourceId': assignments.ResourceId, 'TaskId': assignments.TaskId, 
                          #'Duration': (tasks.loc[assignments.TaskId.values - 1].End_DateTime - tasks.loc[assignments.TaskId.values - 1].Start_DateTime).values,
-                         'StartDateTime': tasks.loc[assignments.TaskId.values - 1].StartDateTime,
-                         'EndDateTime': tasks.loc[assignments.TaskId.values - 1].EndDateTime})
+                         'StartDateTime': tasks.loc[assignments.TaskId - 1].StartDateTime,
+                         'EndDateTime': tasks.loc[assignments.TaskId - 1].EndDateTime})
 
 
 fig = px.timeline(gantt_df, x_start='StartDateTime', x_end='EndDateTime', y='ResourceId', color='TaskId', color_continuous_scale='rainbow')
