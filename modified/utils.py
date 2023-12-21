@@ -15,7 +15,7 @@ def read_prios(tasks, resources, priorityContent, scores):
             priorityContent[(priorityContent['PriorityId'] == i + 1) & (priorityContent['ObjectType'] == 'Resource')]['ObjectId'].values] = scores[i]
         
         priorities[i] = df
-        
+
     return priorities
 
 def compute_compatabilities(tasks, resources):
@@ -61,4 +61,13 @@ def heatmap(tasks):
     return taskHeatmap
 
 def utilities(data):
-    pass
+    tasks = pd.read_excel(data, sheet_name='Tasks')
+    resources = pd.read_excel(data, sheet_name='Resources')
+    scorePairs = pd.read_excel(data, sheet_name='ScorePairs')
+
+    utilities = newDF(tasks, resources, 300)
+
+    for index, row in scorePairs.iterrows():
+        utilities.loc[row['TaskId'], row['ResourceId']] = row['ScoreValue']
+
+    return utilities

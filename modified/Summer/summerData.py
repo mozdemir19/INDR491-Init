@@ -8,13 +8,13 @@ import pulp as pl
 import plotly.express as px
 import plotly.graph_objects as go
 import utils as util
-import os.path
+import os
 
 priorityScores = [500, 400, 300, 200]
 min_bucket = 1
 winter = '/../Winter/RMS-MultiKPI-Input-KisDonemi-GercekVeri.xlsx'
 summer = '/RMS-MultiKPI-Input-YazDonemi-GercekVeri.xlsx'
-dataFilePath = os.path.dirname(__file__) + summer
+dataFilePath = os.path.dirname(__file__) + winter
 
 data = pd.ExcelFile(dataFilePath)
 tasks = pd.read_excel(data, sheet_name='Tasks')
@@ -39,14 +39,13 @@ resourceList = resources.ResourceId
 problem = pl.LpProblem('SummerData', pl.LpMaximize)
 
 x = {}
-U = {}
+U = util.utilities(data)
 
 for t in taskList:
     for r in resourceList:
         x[t, r] = pl.LpVariable('x_%s,%s' % (t, r), lowBound=0, upBound=compatibilities.loc[t, r], cat=pl.LpBinary)
-        U[t, r] = 1
 
-problem += pl.lpSum([(U[var] + np.sum([priorities[i].loc[var] for i in range(len(priorities))])) * x[var] for var in x])
+problem += pl.lpSum([(U.loc[var] + np.sum([priorities[i].loc[var] for i in range(len(priorities))])) * x[var] for var in x])
 
 #CONSTRAINTS
 
@@ -78,12 +77,11 @@ for var in x:
 print(assignments)
 assignments.to_csv('assignments.csv')
 ##print gantt chart
-gantt_df = pd.DataFrame({'ResourceId': assignments.ResourceId, 'TaskId': assignments.TaskId, 
-                         #'Duration': (tasks.loc[assignments.TaskId.values - 1].End_DateTime - tasks.loc[assignments.TaskId.values - 1].Start_DateTime).values,
+gantt_df = pd.DataFrame({'ResourceId': assignments.ResourceId, 'TaskId': assignments.TaskId,
                          'StartDateTime': tasks.loc[assignments.TaskId - 1].StartDateTime,
                          'EndDateTime': tasks.loc[assignments.TaskId - 1].EndDateTime})
 
 
 fig = px.timeline(gantt_df, x_start='StartDateTime', x_end='EndDateTime', y='ResourceId', color='TaskId', color_continuous_scale='rainbow')
-fig.show()
+#fig.show()
 
